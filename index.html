@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Cursor — All CSS Cursor Types Preview</title>
+<meta name="description" content="Preview all CSS cursor types. Hover to see each cursor. Copy CSS code. Custom cursor with image upload.">
+<meta property="og:title" content="CSS Cursor — All CSS Cursor Types Preview">
+<meta property="og:description" content="Preview all CSS cursor types. Hover to see each cursor. Copy CSS code. Custom cursor with image upload.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yurukusa.github.io/css-cursor/">
+<meta property="og:image" content="https://yurukusa.github.io/css-cursor/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSS Cursor — All CSS Cursor Types Preview">
+<meta name="twitter:description" content="Preview all CSS cursor types. Hover to see each cursor. Copy CSS code. Custom cursor with image upload.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.container{max-width:1200px;margin:0 auto;padding:0 20px;width:100%}
+
+header{padding:32px 0 24px;text-align:center}
+header h1{font-size:2rem;font-weight:700;margin-bottom:8px}
+header p{color:var(--text2);font-size:1rem}
+
+/* Search */
+.search-wrap{max-width:480px;margin:0 auto 24px;position:relative}
+.search-wrap input{width:100%;padding:10px 16px 10px 40px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.95rem;outline:none;transition:border-color .2s}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text2);pointer-events:none}
+
+/* Preview area */
+.preview-section{margin-bottom:32px}
+.preview-area{background:var(--surface);border:2px dashed var(--border);border-radius:12px;height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:border-color .2s}
+.preview-area:hover{border-color:var(--accent)}
+.preview-label{font-size:1.1rem;color:var(--text2);pointer-events:none}
+.preview-cursor-name{font-size:1.4rem;font-weight:600;color:var(--accent);pointer-events:none}
+.preview-code{font-family:"SF Mono",Monaco,Consolas,monospace;font-size:0.85rem;color:var(--text2);pointer-events:none}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#000;padding:10px 24px;border-radius:8px;font-size:0.9rem;font-weight:600;opacity:0;transition:all .3s ease;pointer-events:none;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Category heading */
+.category-heading{font-size:1.1rem;font-weight:600;color:var(--text2);margin:28px 0 12px;padding-left:4px;border-left:3px solid var(--accent);padding-left:12px}
+.category-heading:first-of-type{margin-top:0}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px}
+
+/* Card */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;transition:all .2s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.card.hidden{display:none}
+.card-name{font-size:1rem;font-weight:600;margin-bottom:4px}
+.card-code{font-family:"SF Mono",Monaco,Consolas,monospace;font-size:0.8rem;color:var(--accent);background:rgba(88,166,255,.08);padding:4px 8px;border-radius:4px;display:inline-block;margin-bottom:6px;word-break:break-all}
+.card-category{font-size:0.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+
+/* Custom cursor section */
+.custom-section{margin:40px 0;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.custom-section h2{font-size:1.3rem;margin-bottom:16px}
+.custom-row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.upload-area{border:2px dashed var(--border);border-radius:8px;padding:24px;text-align:center;flex:0 0 260px;cursor:pointer;transition:border-color .2s}
+.upload-area:hover{border-color:var(--accent)}
+.upload-area input{display:none}
+.upload-area p{color:var(--text2);font-size:0.9rem;margin-top:8px}
+.custom-preview{flex:1;min-width:280px}
+.custom-preview-area{background:var(--bg);border:2px dashed var(--border);border-radius:8px;height:120px;display:flex;align-items:center;justify-content:center;color:var(--text2);margin-bottom:12px;transition:border-color .2s}
+.custom-preview-area:hover{border-color:var(--accent)}
+.custom-code{font-family:"SF Mono",Monaco,Consolas,monospace;font-size:0.85rem;color:var(--accent);background:rgba(88,166,255,.08);padding:10px 14px;border-radius:6px;word-break:break-all;cursor:pointer;position:relative}
+.custom-code:hover::after{content:"Click to copy";position:absolute;top:-28px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap}
+.custom-controls{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.custom-controls label{color:var(--text2);font-size:0.85rem}
+.custom-controls input[type="number"]{width:60px;padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:0.85rem}
+
+/* Footer */
+footer{margin-top:auto;padding:24px 0;text-align:center;color:var(--text2);font-size:0.85rem;border-top:1px solid var(--border)}
+
+/* No results */
+.no-results{text-align:center;padding:40px;color:var(--text2);font-size:1rem;display:none}
+
+@media(max-width:600px){
+  header h1{font-size:1.5rem}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+  .custom-row{flex-direction:column}
+  .upload-area{flex:auto;width:100%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>CSS Cursor — All CSS Cursor Types Preview</h1>
+    <p>Hover over any card to see the cursor. Click to copy the CSS code.</p>
+  </div>
+</header>
+
+<main class="container">
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 7a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04Z"/></svg>
+    <input type="text" id="search" placeholder="Search cursors..." autocomplete="off">
+  </div>
+
+  <div class="preview-section">
+    <div class="preview-area" id="previewArea" style="cursor:default">
+      <span class="preview-label">Preview Area</span>
+      <span class="preview-cursor-name" id="previewName">default</span>
+      <span class="preview-code" id="previewCode">cursor: default;</span>
+    </div>
+  </div>
+
+  <div id="cursorGrid"></div>
+
+  <div class="no-results" id="noResults">No cursors found.</div>
+
+  <div class="custom-section">
+    <h2>Custom Cursor</h2>
+    <p style="color:var(--text2);margin-bottom:16px;font-size:0.9rem">Upload an image (PNG, SVG, ICO — max 128×128) to create a custom cursor and get the CSS code.</p>
+    <div class="custom-row">
+      <div class="upload-area" id="uploadArea">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text2)"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>Drop image here or click to upload</p>
+        <input type="file" id="fileInput" accept="image/png,image/svg+xml,image/x-icon,image/gif">
+      </div>
+      <div class="custom-preview">
+        <div class="custom-preview-area" id="customPreview">
+          Hover here to test your custom cursor
+        </div>
+        <div class="custom-code" id="customCode" style="display:none"></div>
+        <div class="custom-controls">
+          <label>Hotspot X: <input type="number" id="hotX" value="0" min="0" max="128"></label>
+          <label>Hotspot Y: <input type="number" id="hotY" value="0" min="0" max="128"></label>
+          <label>Fallback:
+            <select id="fallback" style="padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:0.85rem">
+              <option value="auto">auto</option>
+              <option value="default">default</option>
+              <option value="pointer">pointer</option>
+              <option value="crosshair">crosshair</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <a href="https://yurukusa.github.io/dev-toolkit/">Dev Toolkit</a> — 82+ free browser-based developer tools
+  </div>
+</footer>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const CURSORS = [
+  { category: "General", values: ["auto","default","none"] },
+  { category: "Links & Status", values: ["context-menu","help","pointer","progress","wait"] },
+  { category: "Selection", values: ["cell","crosshair","text","vertical-text"] },
+  { category: "Drag & Drop", values: ["alias","copy","move","no-drop","not-allowed","grab","grabbing"] },
+  { category: "Resize", values: ["col-resize","row-resize","n-resize","e-resize","s-resize","w-resize","ne-resize","nw-resize","se-resize","sw-resize","ew-resize","ns-resize","nesw-resize","nwse-resize"] },
+  { category: "Zoom", values: ["zoom-in","zoom-out"] }
+];
+
+const grid = document.getElementById("cursorGrid");
+const previewArea = document.getElementById("previewArea");
+const previewName = document.getElementById("previewName");
+const previewCode = document.getElementById("previewCode");
+const searchInput = document.getElementById("search");
+const noResults = document.getElementById("noResults");
+const toast = document.getElementById("toast");
+
+let allCards = [];
+
+// Build grid
+CURSORS.forEach(group => {
+  const heading = document.createElement("div");
+  heading.className = "category-heading";
+  heading.textContent = group.category;
+  heading.dataset.category = group.category;
+  grid.appendChild(heading);
+
+  const gridWrap = document.createElement("div");
+  gridWrap.className = "grid";
+  gridWrap.dataset.category = group.category;
+  grid.appendChild(gridWrap);
+
+  group.values.forEach(val => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.cursor = val;
+    card.dataset.cursor = val;
+    card.dataset.category = group.category;
+    card.innerHTML = `
+      <div class="card-name">${val}</div>
+      <div class="card-code">cursor: ${val};</div>
+      <div class="card-category">${group.category}</div>
+    `;
+
+    card.addEventListener("mouseenter", () => {
+      previewArea.style.cursor = val;
+      previewName.textContent = val;
+      previewCode.textContent = `cursor: ${val};`;
+    });
+
+    card.addEventListener("click", () => {
+      copyText(`cursor: ${val};`);
+    });
+
+    gridWrap.appendChild(card);
+    allCards.push(card);
+  });
+});
+
+// Search
+searchInput.addEventListener("input", () => {
+  const q = searchInput.value.toLowerCase().trim();
+  let visible = 0;
+  const visibleCategories = new Set();
+
+  allCards.forEach(card => {
+    const name = card.dataset.cursor;
+    const cat = card.dataset.category.toLowerCase();
+    const match = !q || name.includes(q) || cat.includes(q);
+    card.classList.toggle("hidden", !match);
+    if (match) {
+      visible++;
+      visibleCategories.add(card.dataset.category);
+    }
+  });
+
+  // Hide empty category headings and grids
+  grid.querySelectorAll(".category-heading").forEach(h => {
+    h.style.display = visibleCategories.has(h.dataset.category) ? "" : "none";
+  });
+  grid.querySelectorAll(".grid").forEach(g => {
+    g.style.display = visibleCategories.has(g.dataset.category) ? "" : "none";
+  });
+
+  noResults.style.display = visible === 0 ? "block" : "none";
+});
+
+// Copy
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => showToast("Copied!")).catch(() => {
+    // Fallback
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    showToast("Copied!");
+  });
+}
+
+let toastTimer;
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 1500);
+}
+
+// Custom cursor
+const fileInput = document.getElementById("fileInput");
+const uploadArea = document.getElementById("uploadArea");
+const customPreview = document.getElementById("customPreview");
+const customCodeEl = document.getElementById("customCode");
+const hotX = document.getElementById("hotX");
+const hotY = document.getElementById("hotY");
+const fallback = document.getElementById("fallback");
+let customDataUrl = "";
+
+uploadArea.addEventListener("click", () => fileInput.click());
+uploadArea.addEventListener("dragover", e => { e.preventDefault(); uploadArea.style.borderColor = "var(--accent)"; });
+uploadArea.addEventListener("dragleave", () => { uploadArea.style.borderColor = "var(--border)"; });
+uploadArea.addEventListener("drop", e => {
+  e.preventDefault();
+  uploadArea.style.borderColor = "var(--border)";
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener("change", () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+function handleFile(file) {
+  if (!file.type.match(/^image\//)) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    customDataUrl = e.target.result;
+    updateCustomCursor();
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateCustomCursor() {
+  if (!customDataUrl) return;
+  const x = hotX.value || 0;
+  const y = hotY.value || 0;
+  const fb = fallback.value;
+  const cssVal = `url('${customDataUrl}') ${x} ${y}, ${fb}`;
+  customPreview.style.cursor = cssVal;
+
+  // Show truncated code for display, full for copy
+  const shortUrl = customDataUrl.length > 60 ? customDataUrl.slice(0, 60) + "..." : customDataUrl;
+  const displayCode = `cursor: url('${shortUrl}') ${x} ${y}, ${fb};`;
+  const fullCode = `cursor: url('${customDataUrl}') ${x} ${y}, ${fb};`;
+
+  customCodeEl.style.display = "block";
+  customCodeEl.textContent = displayCode;
+  customCodeEl.onclick = () => copyText(fullCode);
+}
+
+hotX.addEventListener("input", updateCustomCursor);
+hotY.addEventListener("input", updateCustomCursor);
+fallback.addEventListener("change", updateCustomCursor);
+</script>
+</body>
+</html>
